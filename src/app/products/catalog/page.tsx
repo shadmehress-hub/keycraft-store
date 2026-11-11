@@ -22,7 +22,7 @@ async function CatalogPageContent({ searchParams }: CatalogPageProps) {
 
   // 2. Fallback be mockProducts agar dar DB nabood
   if (!product) {
-    product = mockProducts.find((item) => item.id === id || item.slug === id);
+    product = mockProducts.find((item) => item.id === id);
   }
 
   if (!product) notFound();

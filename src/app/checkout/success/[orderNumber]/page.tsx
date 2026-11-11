@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { CheckCircle2, ChevronLeft, PackageCheck, Printer, ShoppingBag } from "lucide-react";
+import { CheckCircle2, ChevronLeft, PackageCheck, ShoppingBag } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui";
 
@@ -9,7 +10,22 @@ interface SuccessPageProps {
   params: Promise<{ orderNumber: string }>;
 }
 
-export default async function OrderSuccessPage({ params }: SuccessPageProps) {
+function OrderSuccessSkeleton() {
+  return (
+    <main className="mx-auto w-full max-w-4xl px-4 pt-10 pb-20 sm:px-6 lg:px-8 animate-pulse">
+      <div className="flex flex-col items-center text-center">
+        <div className="size-20 rounded-3xl bg-zinc-800" />
+        <div className="mt-6 h-6 w-36 rounded-full bg-zinc-800" />
+        <div className="mt-3 h-8 w-64 rounded-lg bg-zinc-800" />
+        <div className="mt-2 h-4 w-96 rounded bg-zinc-800" />
+        <div className="mt-4 h-10 w-48 rounded-xl bg-zinc-800" />
+      </div>
+      <div className="mt-10 h-72 rounded-2xl border border-zinc-800 bg-zinc-900/40" />
+    </main>
+  );
+}
+
+async function OrderSuccessContent({ params }: SuccessPageProps) {
   const { orderNumber } = await params;
 
   const order = await prisma.order.findUnique({
@@ -58,37 +74,31 @@ export default async function OrderSuccessPage({ params }: SuccessPageProps) {
         </div>
 
         <div className="p-6">
-          {/* Customer Info Grid */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-xs sm:text-sm">
+          {/* Order Details Grid */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 pb-6 border-b border-border">
             <div>
-              <span className="text-muted-foreground">تحویل گیرنده:</span>
-              <p className="mt-1 font-semibold text-foreground">{order.customerName}</p>
+              <span className="text-xs text-muted-foreground block">نام خریدار</span>
+              <span className="text-sm font-semibold text-foreground mt-1 block">{order.customerName}</span>
             </div>
             <div>
-              <span className="text-muted-foreground">شماره تماس:</span>
-              <p className="mt-1 font-semibold text-foreground" dir="ltr">{order.phoneNumber}</p>
+              <span className="text-xs text-muted-foreground block">شماره تماس</span>
+              <span className="text-sm font-semibold text-foreground mt-1 block font-mono" dir="ltr">{order.phoneNumber}</span>
             </div>
             <div className="sm:col-span-2">
-              <span className="text-muted-foreground">آدرس تحویل:</span>
-              <p className="mt-1 font-semibold text-foreground leading-6">{order.address}</p>
+              <span className="text-xs text-muted-foreground block">نشانی تحویل گیرنده</span>
+              <span className="text-sm text-foreground mt-1 block leading-relaxed">{order.address}</span>
             </div>
-            {order.note && (
-              <div className="sm:col-span-2">
-                <span className="text-muted-foreground">یادداشت سفارش:</span>
-                <p className="mt-1 text-muted-foreground">{order.note}</p>
-              </div>
-            )}
           </div>
 
-          <div className="my-6 h-px w-full bg-border" />
-
-          {/* Items Table */}
-          <h3 className="mb-4 text-xs font-bold text-muted-foreground">اقلام خریداری شده</h3>
-          <div className="space-y-3">
+          {/* Purchased Items List */}
+          <div className="divide-y divide-border pt-4">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              اقلام سفارش ({order.items.length})
+            </h3>
             {order.items.map((item) => (
-              <div key={item.id} className="flex items-center justify-between text-xs sm:text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="flex size-6 items-center justify-center rounded-md bg-muted text-[11px] font-bold text-muted-foreground">
+              <div key={item.id} className="flex items-center justify-between py-3 text-sm">
+                <div className="flex items-center gap-3">
+                  <span className="flex size-6 items-center justify-center rounded-md bg-muted text-xs font-semibold text-foreground">
                     {item.quantity}×
                   </span>
                   <span className="font-medium text-foreground">{item.name}</span>
@@ -135,5 +145,13 @@ export default async function OrderSuccessPage({ params }: SuccessPageProps) {
         </Button>
       </div>
     </main>
+  );
+}
+
+export default function OrderSuccessPage(props: SuccessPageProps) {
+  return (
+    <Suspense fallback={<OrderSuccessSkeleton />}>
+      <OrderSuccessContent {...props} />
+    </Suspense>
   );
 }

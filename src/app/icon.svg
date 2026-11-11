@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <defs>
+    <!-- Amber Gradient -->
+    <linearGradient id="amberGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- Dark Surface Gradient -->
+    <linearGradient id="darkKey" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1F242D" />
+      <stop offset="100%" stop-color="#0E1116" />
+    </linearGradient>
+
+    <!-- Dish / Top Surface Gradient -->
+    <linearGradient id="dishGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D333F" />
+      <stop offset="100%" stop-color="#161A22" />
+    </linearGradient>
+  </defs>
+
+  <!-- Container Base (Deep Obsidian with subtle amber rim) -->
+  <rect x="1" y="1" width="30" height="30" rx="7.5" fill="#090B0E" stroke="url(#amberGlow)" stroke-width="1.5" />
+
+  <!-- Artisan Keycap Profile (Angled 3D Mechanical Keycap) -->
+  <!-- Skirt / Base Bevel -->
+  <path
+    d="M 6.5 23 L 9.2 8.8 C 9.5 7.7 10.4 7 11.5 7 L 20.5 7 C 21.6 7 22.5 7.7 22.8 8.8 L 25.5 23 C 25.8 24.3 24.8 25.5 23.5 25.5 L 8.5 25.5 C 7.2 25.5 6.2 24.3 6.5 23 Z"
+    fill="url(#darkKey)"
+    stroke="#2E3440"
+    stroke-width="0.75"
+  />
+
+  <!-- Top Inset Dish (Scooped Keycap Face) -->
+  <path
+    d="M 10 9.5 L 22 9.5 C 22.6 9.5 23 10 22.8 10.6 L 21.3 18.4 C 21.1 19 20.6 19.5 20 19.5 L 12 19.5 C 11.4 19.5 10.9 19 10.7 18.4 L 9.2 10.6 C 9 10 9.4 9.5 10 9.5 Z"
+    fill="url(#dishGrad)"
+    stroke="url(#amberGlow)"
+    stroke-width="0.8"
+    stroke-opacity="0.9"
+  />
+
+  <!-- KeyCraft Iconic "K" with Mechanical Switch Stem Cutout -->
+  <!-- Bold Stylized K in glowing Amber -->
+  <path
+    d="M 13 11.5 L 14.5 11.5 L 14.5 17.5 L 13 17.5 Z"
+    fill="url(#amberGlow)"
+  />
+  <path
+    d="M 17.5 11.5 L 19 11.5 L 15.5 14.5 L 19.2 17.5 L 17.4 17.5 L 14.3 14.8 L 16 13.2 Z"
+    fill="url(#amberGlow)"
+  />
+</svg>

@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Category {
+  KEYBOARDS
+  SWITCHES
+  KEYCAPS
+  ACCESSORIES
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  name        String
+  category    Category
+  price       Int // Toman
+  stock       Int      @default(0)
+  inStock     Boolean  @default(true)
+  coverImage  String
+  images      String[]
+  description String
+
+  // ۱. رابطه با نظرات
+  reviews     Review[]
+
+  // ۲. رابطه با آیتم‌های سفارش
+  orderItems  OrderItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([createdAt])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  orderNumber  String      @unique
+  customerName String
+  phoneNumber  String
+  address      String
+  postalCode   String?
+  note         String?
+  totalPrice   Int
+  status       OrderStatus @default(PAID)
+  items        OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([orderNumber])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  name      String
+  price     Int
+  quantity  Int
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int      // امتیاز کاربر از ۱ تا ۵
+  comment   String   // متن دیدگاه
+  userName  String   // نام ثبت‌کننده نظر
+
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}

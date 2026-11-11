@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { Keyboard, ShoppingCartPlus } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import CartBadge from "@/components/CartBadge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,9 +23,74 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata: Metadata = {
-  title: "KeyCraft Studio | کیبوردهای مکانیکی",
+  metadataBase: new URL("https://keycraft.ir"),
+  title: {
+    default: "KeyCraft Studio | فروشگاه تخصصی کیبوردهای مکانیکال",
+    template: "%s | KeyCraft Studio",
+  },
   description:
-    "فروشگاه تخصصی کیبوردهای مکانیکال، سوییچ، کیپ‌کپ و لوازم جانبی میز کار",
+    "مرجع تخصصی خرید کیبوردهای مکانیکال کاستوم، سوییچ‌های دست‌چین، کیپ‌کپ‌های PBT و آرتیران و اکسسوری مینیمال ستاپ میز کار.",
+  keywords: [
+    "کیبورد مکانیکال",
+    "کیبورد مکانیکی",
+    "سوییچ کیبورد",
+    "کیپ‌کپ PBT",
+    "کیبورد کاستوم",
+    "Gateron Oil King",
+    "اکسسوری میز کار",
+    "KeyCraft Studio",
+  ],
+  authors: [{ name: "KeyCraft Studio" }],
+  creator: "KeyCraft Studio",
+  publisher: "KeyCraft Studio",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "KeyCraft Studio | کیبوردهای مکانیکال و لوازم ستاپ",
+    description:
+      "فروشگاه تخصصی کیبوردهای مکانیکال کاستوم، سوییچ، کیپ‌کپ و لوازم جانبی میز کار",
+    url: "https://keycraft.ir",
+    siteName: "KeyCraft Studio",
+    locale: "fa_IR",
+    type: "website",
+    images: [
+      {
+        url: "/products/lumina.jpg",
+        width: 1200,
+        height: 630,
+        alt: "KeyCraft Studio Showcase",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "KeyCraft Studio | کیبوردهای مکانیکی",
+    description:
+      "فروشگاه تخصصی کیبوردهای مکانیکال کاستوم، سوییچ و لوازم ستاپ",
+    images: ["/products/lumina.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -76,10 +142,11 @@ export default function RootLayout({
               <ThemeToggle />
               <Link
                 href="/cart"
-                className="border-border bg-card/70 text-foreground flex size-9 items-center justify-center rounded-xl border transition hover:border-amber-500/40 hover:bg-amber-100/70 hover:text-amber-800 dark:hover:bg-white/10 dark:hover:text-amber-300"
+                className="relative border-border bg-card/70 text-foreground flex size-9 items-center justify-center rounded-xl border transition hover:border-amber-500/40 hover:bg-amber-100/70 hover:text-amber-800 dark:hover:bg-white/10 dark:hover:text-amber-300"
                 aria-label="سبد خرید"
               >
                 <ShoppingCartPlus className="size-4" />
+                <CartBadge />
               </Link>
             </div>
           </div>

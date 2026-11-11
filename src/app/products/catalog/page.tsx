@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CatalogGallery from "@/modules/products/components/CatalogGallery";
+import { prisma } from "@/lib/prisma";
 import { mockProducts } from "@/modules/products/mock/products";
 
 interface CatalogPageProps {
@@ -12,10 +13,20 @@ async function CatalogPageContent({ searchParams }: CatalogPageProps) {
 
   if (!id) notFound();
 
-  const product = mockProducts.find((item) => item.id === id);
+  // 1. Aval dar database PostgreSQL peyda mikonim
+  let product: any = await prisma.product.findFirst({
+    where: {
+      OR: [{ id }, { slug: id }],
+    },
+  });
+
+  // 2. Fallback be mockProducts agar dar DB nabood
+  if (!product) {
+    product = mockProducts.find((item) => item.id === id || item.slug === id);
+  }
+
   if (!product) notFound();
 
-  // فقط کامپوننت را صدا می‌زنیم و دیتا را به آن می‌دهیم
   return <CatalogGallery product={product} />;
 }
 

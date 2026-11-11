@@ -1,5 +1,6 @@
 # ⌨️ KeyCraft Studio — Premium Mechanical Keyboards E-Commerce
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-keycraft--store.vercel.app-emerald?style=for-the-badge&logo=vercel&logoColor=white)](https://keycraft-store.vercel.app)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.4.3-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.3.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
